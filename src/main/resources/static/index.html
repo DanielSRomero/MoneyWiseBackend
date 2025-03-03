@@ -1,0 +1,70 @@
+<html>
+<head>
+    <title>PSP ktor DAM 24/25</title>
+    <script type="application/javascript">
+        function fetchAndDisplayUsers() {
+            console.log("-----------------------------------------");
+            fetchUsers()
+                .then(users => {
+                    console.log("Promesa resuelta con los empleados:", users);
+                    displayUsers(users);
+                })
+        }
+
+        function fetchUsers() {
+            return fetch(
+                "/user",
+                {
+                    headers: { 'Accept': 'application/json' }
+                }
+            ).then(resp => {
+                console.log("Estado de la respuesta HTTP:", resp.status);
+                console.log("Encabezados de la respuesta:", resp.headers);
+                return resp.json();
+            })
+        }
+
+        function displayUsers(users) {
+            console.log("Dentro de display:", users);
+            const usersTableBody = document.getElementById("usersTableBody");
+            users.forEach(user => {
+                const newRow = userRow(user);
+                usersTableBody.appendChild(newRow);
+            })
+        }
+
+        function userRow(user) {
+            return tr([
+                td(user.name || "N/A"),
+                td(user.userName || "N/A"),
+                td(user.email || ""N/A"")
+        ]);
+        }
+
+        function tr(children) {
+            const node = document.createElement("tr");
+            children.forEach(child => node.appendChild(child));
+            return node;
+        }
+
+        function td(text) {
+            const node = document.createElement("td");
+            node.appendChild(document.createTextNode(text));
+            return node;
+        }
+    </script>
+</head>
+<body>
+<h1>Tabla de usuarios</h1>
+<form action="javascript:fetchAndDisplayUsers()">
+    <input type="submit" value="Ver usuarios">
+</form>
+<table>
+    <thead>
+    <tr><th>Name</th><th>UserName</th><th>Email</th></tr>
+    </thead>
+    <tbody id="usersTableBody">
+    </tbody>
+</table>
+</body>
+</html>
