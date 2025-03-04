@@ -57,7 +57,7 @@ class PersistenceUserRepository : UserInterface {
                     this.name = user.name
                     this.userName = user.userName
                     this.email = user.email
-                    this.password = PasswordHash.hash(user.password)
+                    this.password = data.security.PasswordHash.hash(user.password)
                     this.phone = user.phone
                     this.token = user.token
                 }
@@ -118,7 +118,7 @@ class PersistenceUserRepository : UserInterface {
                     this.name = user.name!!
                     this.userName = user.userName!!
                     this.email = user.email!!
-                    this.password = PasswordHash.hash(user.password!!)
+                    this.password = data.security.PasswordHash.hash(user.password!!)
                     this.phone = user.phone!!
                     this.token = user.token!!
                 }
@@ -142,9 +142,9 @@ class PersistenceUserRepository : UserInterface {
             resultRow?.let {
                 User(
                     userName = it[UserTable.userName],
+                    password = it[UserTable.password],
                     name = it[UserTable.name],
                     email = it[UserTable.email],
-                    password = it[UserTable.password],
                     phone = it[UserTable.phone],
                     token = it[UserTable.token],
 

@@ -11,8 +11,8 @@ class LoginUseCase (val repository : UserInterface){
         if (userName.isNullOrBlank() || pass.isNullOrBlank()) return null
 
         return try{
-            val em = repository.login(userName, pass)  ?: null
-
+            val em = repository.login(userName, pass) ?: null
+            println(em.toString())
             em!!.token = JwtConfig.generateToken(em.userName)
             val updateUser = em.toUpdateUser()
             val res = repository.updateUser(updateUser, userName)

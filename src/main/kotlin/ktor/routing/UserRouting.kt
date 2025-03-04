@@ -44,6 +44,9 @@ fun Route.userRouting(){
                         call.respond(upUser)
                     }
                     return@get
+                }else{
+                    val employees = ProviderUseCase.getAllUsers()
+                    call.respond(employees)
                 }
 
             }

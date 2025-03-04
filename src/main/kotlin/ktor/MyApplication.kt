@@ -1,9 +1,6 @@
-package com.example.ktor
+package ktor
 
 import io.ktor.server.application.*
-import ktor.configureDatabases
-import ktor.configureRouting
-import ktor.configureSecurity
 
 fun main(args: Array<String>) {
     io.ktor.server.netty.EngineMain.main(args)

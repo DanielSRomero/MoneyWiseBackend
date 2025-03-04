@@ -6,10 +6,10 @@ import domain.models.User
 
 fun User.toUpdateUser() : UpdateUser {
     return UpdateUser(
-        name = name,
         userName = userName,
-        email = email,
         password = password,
+        name = name,
+        email = email,
         phone = phone,
         token = token
     )
@@ -18,9 +18,9 @@ fun User.toUpdateUser() : UpdateUser {
 
 fun UpdateUser.toUser() : User {
     return User(
-        name = name!!,
         userName = userName!!,
         password = password!!,
+        name = name!!,
         email = email!!,
         phone = phone!!,
         token = token!!
@@ -30,10 +30,10 @@ fun UpdateUser.toUser() : User {
 fun UserDao.toUser () : User {
 
     val e = User(
-        this.name,
         this.userName,
-        this.email,
         this.password,
+        this.name ?: "",
+        this.email ?: "",
         this.phone ?: "000-0000-0000",
         this.token ?: "null",
     )

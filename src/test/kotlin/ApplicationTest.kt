@@ -1,6 +1,6 @@
 package com
 
-import com.example.ktor.myModule
+import ktor.myModule
 import io.ktor.client.request.*
 import io.ktor.http.*
 import io.ktor.server.testing.*

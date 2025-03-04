@@ -14,7 +14,7 @@ object PasswordHash : PasswordHashInterface {
     }
 
     override fun verify(pass: String, passHash: String): Boolean {
-        return hash(pass) == passHash
+        return data.security.PasswordHash.hash(pass) == passHash
     }
 
 

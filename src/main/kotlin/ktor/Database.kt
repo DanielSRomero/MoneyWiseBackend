@@ -4,10 +4,10 @@ import io.ktor.server.application.*
 import org.jetbrains.exposed.sql.Database
 
 fun Application.configureDatabases(){
-    val driver = environment.config.property("ktor.database.driver").getString()
-    val url = environment.config.property("ktor.database.url").getString()
-    val username = environment.config.property("ktor.database.username").getString()
-    val password = environment.config.property("ktor.database.password").getString()
+    val driver = "org.mariadb.jdbc.Driver"
+    val url = "jdbc:mariadb://localhost:3306/dbMoneyWise"
+    val username = "dani"
+    val password = "dani"
 
     try {
         Database.connect(

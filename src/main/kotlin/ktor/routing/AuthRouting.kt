@@ -6,7 +6,10 @@ import io.ktor.http.*
 import io.ktor.server.request.*
 import io.ktor.server.routing.*
 import io.ktor.serialization.*
+import io.ktor.server.application.log
 import io.ktor.server.response.*
+import io.ktor.server.application.*
+
 
 fun Route.authRouting(){
 
