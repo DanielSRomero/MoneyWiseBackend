@@ -49,24 +49,6 @@ class PersistenceUserRepository : UserInterface {
     }
 
 
-    override suspend fun postUser(user: User): Boolean {
-        val usr = getUserByUserName(user.userName)
-        return if (usr == null) {
-            suspendTransaction {
-                UserDao.new {
-                    this.name = user.name
-                    this.userName = user.userName
-                    this.email = user.email
-                    this.password = PasswordHash.hash(user.password)
-                    this.phone = user.phone
-                    this.token = user.token
-                }
-            }
-            true
-        } else
-            false
-    }
-
 
     override suspend fun updateUser(user: UpdateUser, userName: String): Boolean {
         var num = 0

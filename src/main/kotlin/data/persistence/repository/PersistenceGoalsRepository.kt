@@ -11,7 +11,7 @@ import domain.repository.GoalsInterface
 import org.jetbrains.exposed.sql.deleteWhere
 import org.jetbrains.exposed.sql.update
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
-
+import org.jetbrains.exposed.sql.and
 
 
 class PersistenceGoalsRepository : GoalsInterface {
@@ -25,8 +25,7 @@ class PersistenceGoalsRepository : GoalsInterface {
         return suspendTransaction {
             GoalDao
                 .find {
-                    GoalsTable.userUserName eq user.userName
-                    GoalsTable.name eq name
+                    (GoalsTable.userUserName eq user.userName) and (GoalsTable.name eq name)
                 }
                 .map { it.toGoal() }
                 .firstOrNull()
@@ -68,8 +67,7 @@ class PersistenceGoalsRepository : GoalsInterface {
             suspendTransaction {
                 num = GoalsTable
                     .update({
-                        GoalsTable.userUserName eq user.userName
-                        GoalsTable.name eq name
+                        (GoalsTable.userUserName eq user.userName) and (GoalsTable.name eq name)
                     }) { stm ->
                         goal.userUserName?.let { stm[userUserName] = it }
                         goal.name?.let { stm[GoalsTable.name] = it }
@@ -88,8 +86,7 @@ class PersistenceGoalsRepository : GoalsInterface {
     override suspend fun deleteGoal(name: String, user: User): Boolean = suspendTransaction {
         val num = GoalsTable
             .deleteWhere{
-                GoalsTable.userUserName eq user.userName
-                GoalsTable.name eq name
+                (GoalsTable.userUserName eq user.userName) and (GoalsTable.name eq name)
             }
         num == 1
     }

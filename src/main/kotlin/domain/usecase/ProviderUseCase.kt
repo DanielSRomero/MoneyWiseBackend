@@ -14,7 +14,6 @@ import domain.usecase.goals.UpdateGoalUseCase
 import domain.usecase.user.DeleteUserUseCase
 import domain.usecase.user.GetAllUsersUseCase
 import domain.usecase.user.GetUserByUserNameUseCase
-import domain.usecase.user.InsertUserUseCase
 import domain.usecase.user.LoginUseCase
 import domain.usecase.user.RegisterUseCase
 import domain.usecase.user.UpdateUserUseCase
@@ -31,7 +30,6 @@ object ProviderUseCase {
     private val getAllUsersUseCase = GetAllUsersUseCase(repositoryUser)
     private val getUserByUserNameUseCase = GetUserByUserNameUseCase(repositoryUser)
     private val updateUserUseCase = UpdateUserUseCase(repositoryUser)
-    private val insertUserUseCase = InsertUserUseCase(repositoryUser)
     private val deleteUserUseCase = DeleteUserUseCase(repositoryUser)
     private val loginUseCase = LoginUseCase(repositoryUser)
     private val registerUseCase = RegisterUseCase(repositoryUser)
@@ -63,20 +61,6 @@ object ProviderUseCase {
 
 
 
-    suspend fun insertUser(user: User?) : Boolean{
-        if (user == null){
-            logger.warn( "No existen datos del usuario a insertar")
-            return false
-        }
-        insertUserUseCase.user = user
-        val res = insertUserUseCase()
-        return if (!res){
-            logger.warn("No se ha insertado el usuario. Posiblemente ya exista")
-            false
-        }else{
-            true
-        }
-    }
 
     suspend fun updateUser(updateUser: UpdateUser?, userName: String) : Boolean{
         if (updateUser == null){
@@ -158,7 +142,7 @@ object ProviderUseCase {
         updateGoalUseCase.name = name
         updateGoalUseCase.user = getUserByUserName(userName)
 
-        return updateUserUseCase()
+        return updateGoalUseCase()
     }
 
 

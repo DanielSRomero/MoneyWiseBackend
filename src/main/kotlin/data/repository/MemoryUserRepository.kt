@@ -18,15 +18,6 @@ class MemoryUserRepository : UserInterface {
         return UserData.listUser.filter { it.userName == userName}.firstOrNull()
     }
 
-    override suspend fun postUser(user: User): Boolean {
-        val emp = getUserByUserName(user.userName)
-        return if (emp!= null) {
-            false
-        } else{
-            UserData.listUser.add(user)
-            true
-        }
-    }
 
     override suspend fun updateUser(updateUser: UpdateUser, userName: String): Boolean {
         val index = UserData.listUser.indexOfFirst { it.userName == userName }

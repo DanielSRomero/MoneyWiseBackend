@@ -10,8 +10,6 @@ interface UserInterface {
 
     suspend fun getUserByUserName (userName: String) : User?
 
-    suspend fun postUser(user: User) : Boolean
-
     suspend fun updateUser(user: UpdateUser, userName: String) : Boolean
 
     suspend fun deleteUser(userName : String) : Boolean

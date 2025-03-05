@@ -1,5 +1,6 @@
 package ktor.routing
 
+import data.security.PasswordHash
 import domain.mapper.toUpdateUser
 import domain.models.user.UpdateUser
 import domain.models.user.User
@@ -19,8 +20,6 @@ fun Route.userRouting(){
             call.respondText("Hello World!")
         }
     }
-
-
 
 
     route ("/user"){
@@ -75,34 +74,6 @@ fun Route.userRouting(){
             }
 
 
-
-
-            post(){
-                val token = call.request.headers["Authorization"]?.removePrefix("Bearer ")
-                val validate = call.validateToken(token!!)
-                if (!validate)
-                    return@post
-                try{
-                    val usr = call.receive<User>()
-                    val res = ProviderUseCase.insertUser(usr)
-                    if (! res){
-                        call.respond(HttpStatusCode.Conflict, "El usuario no pudo insertarse. Puede que ya exista")
-                        return@post
-                    }
-                    call.respond(HttpStatusCode.Created, "Se ha insertado correctamente con userName =  ${usr.userName}")
-                } catch (e : IllegalStateException){
-                    call.respond(HttpStatusCode.BadRequest, "Error en el formato de envío de datos o lectura del cuerpo.")
-                } catch (e: JsonConvertException){
-                    call.respond(HttpStatusCode.BadRequest," Problemas en la conversión json")
-                } catch (e: Exception){
-                    call.respond(HttpStatusCode.BadRequest, "Error en los datos. Probablemente falten.")
-                }
-
-            }
-
-
-
-
             patch("{userUserName}"){
                 val token = call.request.headers["Authorization"]?.removePrefix("Bearer ")
                 val validate = call.validateToken(token!!)
@@ -113,14 +84,24 @@ fun Route.userRouting(){
                     val userName = call.parameters["userUserName"]
                     userName?.let{
                         val updateUser = call.receive<UpdateUser>()
-                        val res = ProviderUseCase.updateUser(updateUser, userName)
-                        if (! res){
-                            call.respond(HttpStatusCode.Conflict, "El usuario no pudo modificarse. Puede que no exista")
-                            return@patch
+                        val user = ProviderUseCase.getUserByUserName(userName)
+                        if (user != null) {
+                            if (user.token == token) {
+                                val res = ProviderUseCase.updateUser(updateUser, userName)
+                                if (! res){
+                                    call.respond(HttpStatusCode.Conflict, "El usuario no pudo modificarse. Puede que no exista")
+                                    return@patch
+                                }
+                                call.respond(HttpStatusCode.Created, "Se ha actualizado correctamente con userName =  ${userName}")
+                            } else {
+                                call.respond(HttpStatusCode.BadRequest,"No puedes modificar usuarios ajenos")
+                            }
+
+                        } else {
+                            call.respond(HttpStatusCode.NotFound,"No se ha encontrado usuario con ese nombre")
                         }
-                        call.respond(HttpStatusCode.Created, "Se ha actualizado correctamente con userName =  ${userName}")
                     }?: run{
-                        call.respond(HttpStatusCode.BadRequest,"Debes identificar el usrleado")
+                        call.respond(HttpStatusCode.BadRequest,"Debes identificar el usuario logueado")
                         return@patch
                     }
                 } catch (e: IllegalStateException){
@@ -140,11 +121,20 @@ fun Route.userRouting(){
                 val userName = call.parameters["userUserName"]
                 ProviderUseCase.logger.warn("Queremos borrar el usuario con userName $userName")
                 userName?.let{
-                    val res = ProviderUseCase.deleteUser(userName)
-                    if (! res){
-                        call.respond(HttpStatusCode.NotFound,"Usuario no encontrado para borrar")
-                    }else{
-                        call.respond(HttpStatusCode.NoContent,)
+                    val user = ProviderUseCase.getUserByUserName(userName)
+                    if (user != null) {
+                        if (user.token == token) {
+                            val res = ProviderUseCase.deleteUser(userName)
+                            if (! res){
+                                call.respond(HttpStatusCode.NotFound,"Usuario no encontrado para borrar")
+                            }else{
+                                call.respond(HttpStatusCode.NoContent, "Usuario borrado correctamente")
+                            }
+                        } else {
+                            call.respond(HttpStatusCode.BadRequest,"No puedes eliminar usuarios ajenos")
+                        }
+                    } else {
+                        call.respond(HttpStatusCode.NotFound,"Usuario no encontrado")
                     }
                 }?:run{
                     call.respond(HttpStatusCode.NoContent,"Debes identificar el usuario")

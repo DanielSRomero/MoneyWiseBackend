@@ -1,14 +1,16 @@
-CREATE TABLE User (
-                          id INT AUTO_INCREMENT PRIMARY KEY,
-                          userName VARCHAR(100),
-                          password VARCHAR(255),
-                          name VARCHAR(100),
-                          email VARCHAR(100),
-                          phone VARCHAR(20),
-                          token VARCHAR(255)
-);ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='tabla de usuarios';
+CREATE TABLE `User` (
+    id INT AUTO_INCREMENT,
+    userName VARCHAR(100) NOT NULL,
+    password VARCHAR(255),
+    name VARCHAR(100),
+    email VARCHAR(100),
+    phone VARCHAR(20),
+    token VARCHAR(255),
+    PRIMARY KEY (id),
+    UNIQUE KEY (userName)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='tabla de usuarios';
 
-INSERT INTO User (id, userName, password, name, email, phone, token) VALUES 
+INSERT INTO User (id, userName, password, name, email, phone, token) VALUES
 (1, 'JuanP', 'bd94dcda26fccb4e68d6a31f9b5aac0b571ae266d822620e901ef7ebe3a11d4f', 'Juan Pérez', 'juan.perez@example.com', '5551234567', ''),
 (2,'MariaL', 'f1fc54b2f4d2075409d5596c2299f2790dbebce8baf77218a6ad7b0839565975', 'María López', 'maria.lopez@example.com', '5559876543', ''),
 (3,'Carlitos', 'e27c097877f25b799c7e3857fd7abcab5b11d95563512d749f15d6506bd2810c', 'Carlos Gómez', 'carlos.gomez@example.com', '5552345678', ''),
@@ -47,19 +49,19 @@ CREATE TABLE Goals (
                       money INT,
                       year INT,
                       image VARCHAR(255),
-                      FOREIGN KEY (idUser) REFERENCES User(id)
+                      FOREIGN KEY (userUserName) REFERENCES User(userName)
                               ON DELETE CASCADE
                               ON UPDATE CASCADE
-);ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='tabla de metas';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='tabla de metas';
 
-INSERT INTO Goals (id, idUser, name, money, year, image) VALUES
-(1, "JuanP", 'Viaje a Europa', 5000, '2025', ''),
-(2, "JuanP", 'Comprar una laptop', 1500, '2026', ''),
-(3, "JuanP", 'Ahorrar para coche', 10000, '2026', ''),
-(4, "MariaL", 'Pagar deudas', 3000, '2026', ''),
-(5, "MariaL", 'Curso de programación', 800, '2026', ''),
-(6, "MariaL", 'Renovación de casa', 7000, '2025', ''),
-(7, "Carlitos", 'Inversión en negocio', 12000, '2026', ''),
-(8, "AnaT", 'Boda', 15000, '2025-10-05', ''),
-(9, "Lascaras", 'Fondo de emergencia', 5000, '2026', ''),
-(10, "Luh", 'Comprar bicicleta', 600, '2026', '');
+INSERT INTO Goals (id, userUserName, name, money, year, image) VALUES
+(1, 'JuanP', 'Viaje a Europa', 5000, 2025, ''),
+(2, 'JuanP', 'Comprar una laptop', 1500, 2026, ''),
+(3, 'JuanP', 'Ahorrar para coche', 10000, 2026, ''),
+(4, 'MariaL', 'Pagar deudas', 3000, 2026, ''),
+(5, 'MariaL', 'Curso de programación', 800, 2026, ''),
+(6, 'MariaL', 'Renovación de casa', 7000, 2025, ''),
+(7, 'Carlitos', 'Inversión en negocio', 12000, 2026, ''),
+(8, 'AnaT', 'Boda', 15000, 2025, ''),
+(9, 'Lascaras', 'Fondo de emergencia', 5000, 2026, ''),
+(10, 'Luh', 'Comprar bicicleta', 600, 2026, '');

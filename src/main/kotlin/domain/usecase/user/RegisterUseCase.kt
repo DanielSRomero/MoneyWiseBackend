@@ -10,6 +10,7 @@ class RegisterUseCase (val repository : UserInterface){
 
         user.userName = user.userName!!
         user.password = user.password!!
+        user.name = user.name?:""
         user.phone = user.phone?:"0000000"
         user.email = user.email?:""
         user.token = user.token?: ""
