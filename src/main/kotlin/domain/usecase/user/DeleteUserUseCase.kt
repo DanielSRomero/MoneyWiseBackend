@@ -1,4 +1,4 @@
-package domain.usecase
+package domain.usecase.user
 
 import domain.repository.UserInterface
 

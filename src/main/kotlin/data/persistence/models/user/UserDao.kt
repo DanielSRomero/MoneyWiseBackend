@@ -1,4 +1,4 @@
-package data.persistence.models
+package data.persistence.models.user
 
 import org.jetbrains.exposed.dao.IntEntity
 import org.jetbrains.exposed.dao.IntEntityClass

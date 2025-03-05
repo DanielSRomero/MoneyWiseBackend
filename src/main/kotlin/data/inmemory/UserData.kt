@@ -1,6 +1,6 @@
 package data.inmemory
 
-import domain.models.User
+import domain.models.user.User
 
 object UserData {
     val listUser = mutableListOf<User>(

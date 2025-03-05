@@ -1,8 +1,8 @@
 package data.repository
 
 import data.inmemory.UserData
-import domain.models.UpdateUser
-import domain.models.User
+import domain.models.user.UpdateUser
+import domain.models.user.User
 import domain.repository.UserInterface
 
 class MemoryUserRepository : UserInterface {

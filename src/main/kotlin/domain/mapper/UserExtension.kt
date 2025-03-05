@@ -1,8 +1,8 @@
 package domain.mapper
 
-import data.persistence.models.UserDao
-import domain.models.UpdateUser
-import domain.models.User
+import data.persistence.models.user.UserDao
+import domain.models.user.UpdateUser
+import domain.models.user.User
 
 fun User.toUpdateUser() : UpdateUser {
     return UpdateUser(

@@ -1,12 +1,12 @@
 package data.persistence.repository
 
-import data.persistence.models.UserDao
-import data.persistence.models.UserTable
+import data.persistence.models.user.UserDao
+import data.persistence.models.user.UserTable
 import data.persistence.models.suspendTransaction
 import data.security.PasswordHash
 import domain.mapper.toUser
-import domain.models.UpdateUser
-import domain.models.User
+import domain.models.user.UpdateUser
+import domain.models.user.User
 import domain.repository.UserInterface
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.deleteWhere
@@ -50,14 +50,14 @@ class PersistenceUserRepository : UserInterface {
 
 
     override suspend fun postUser(user: User): Boolean {
-        val em = getUserByUserName(user.userName)
-        return if (em == null) {
+        val usr = getUserByUserName(user.userName)
+        return if (usr == null) {
             suspendTransaction {
                 UserDao.new {
                     this.name = user.name
                     this.userName = user.userName
                     this.email = user.email
-                    this.password = data.security.PasswordHash.hash(user.password)
+                    this.password = PasswordHash.hash(user.password)
                     this.phone = user.phone
                     this.token = user.token
                 }
@@ -118,7 +118,7 @@ class PersistenceUserRepository : UserInterface {
                     this.name = user.name!!
                     this.userName = user.userName!!
                     this.email = user.email!!
-                    this.password = data.security.PasswordHash.hash(user.password!!)
+                    this.password = PasswordHash.hash(user.password!!)
                     this.phone = user.phone!!
                     this.token = user.token!!
                 }

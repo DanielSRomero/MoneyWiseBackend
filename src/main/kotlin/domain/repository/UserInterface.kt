@@ -1,7 +1,7 @@
 package domain.repository
 
-import domain.models.UpdateUser
-import domain.models.User
+import domain.models.user.UpdateUser
+import domain.models.user.User
 
 interface UserInterface {
     suspend fun getAllUser () : List <User>

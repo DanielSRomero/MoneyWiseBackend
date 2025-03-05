@@ -1,8 +1,8 @@
-package domain.usecase
+package domain.usecase.user
 
 import domain.mapper.toUpdateUser
 import domain.mapper.toUser
-import domain.models.User
+import domain.models.user.User
 import domain.repository.UserInterface
 import domain.security.JwtConfig
 

@@ -1,8 +1,8 @@
 package ktor.routing
 
 import domain.mapper.toUpdateUser
-import domain.models.UpdateUser
-import domain.models.User
+import domain.models.user.UpdateUser
+import domain.models.user.User
 import domain.usecase.ProviderUseCase
 import io.ktor.http.*
 import io.ktor.server.auth.*

@@ -1,7 +1,6 @@
-package domain.usecase
+package domain.usecase.user
 
-import domain.models.UpdateUser
-import domain.models.User
+import domain.models.user.UpdateUser
 import domain.repository.UserInterface
 
 class UpdateUserUseCase (val repository : UserInterface){
