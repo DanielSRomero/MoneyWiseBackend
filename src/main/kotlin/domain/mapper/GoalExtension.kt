@@ -6,7 +6,7 @@ import domain.models.goals.UpdateGoal
 
 fun Goal.toUpdateGoal() : UpdateGoal {
     return UpdateGoal(
-        userUserName = userUsername,
+        userUserName = userUserName,
         name = name,
         money = money,
         year = year,
@@ -17,7 +17,7 @@ fun Goal.toUpdateGoal() : UpdateGoal {
 
 fun UpdateGoal.toGoal() : Goal {
     return Goal(
-        userUsername = userUserName!!,
+        userUserName = userUserName!!,
         name = name!!,
         money = money!!,
         year = year!!,

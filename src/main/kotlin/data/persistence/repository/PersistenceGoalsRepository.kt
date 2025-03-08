@@ -49,7 +49,7 @@ class PersistenceGoalsRepository : GoalsInterface {
         return if (g == null) {
             suspendTransaction {
                 GoalDao.new {
-                    this.userUserName = goal.userUsername
+                    this.userUserName = goal.userUserName
                     this.name = goal.name
                     this.money = goal.money
                     this.year = goal.year

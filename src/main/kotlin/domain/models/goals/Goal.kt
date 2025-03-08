@@ -4,7 +4,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class Goal (
-    var userUsername : String,
+    var userUserName : String,
     var name : String,
     var money : Int,
     var year : Int,
