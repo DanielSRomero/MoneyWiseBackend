@@ -16,7 +16,6 @@ class DeleteGoalUseCase (val repository : GoalsInterface) {
             goal?.let { go ->
                 go.image?.let{ img->
                     Utils.deleteImage(user!!.userName, img)
-                    Utils.deleteDirectory(user!!.userName)
                 }
                 return repository.deleteGoal(name!!, user!!)
             }

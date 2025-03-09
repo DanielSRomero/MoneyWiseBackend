@@ -14,14 +14,10 @@ class InsertGoalUseCase (val repository : GoalsInterface){
         return if (user == null || goal == null) {
             false
         }else {
-            val isCreateDir = Utils.createDir(goal!!.userUserName)  //creamos su directorio
-            if (isCreateDir){
-                val img = goal!!.image
-                if (!img.isNullOrBlank()){  //Si tiene imagen, hay que crearla.
-                    goal!!.image = Utils.createBase64ToImg(img, goal!!.userUserName)  //creamos la imagen, a partir del Base64 y devolvemos su http
-                }
-            }else{
-                throw IllegalStateException("No se pudo crear el directorio del usuario. Puede que ya exista")
+            Utils.createDir(goal!!.userUserName)  //creamos su directorio
+            val img = goal!!.image
+            if (!img.isNullOrBlank()){  //Si tiene imagen, hay que crearla.
+                goal!!.image = Utils.createBase64ToImg(img, goal!!.userUserName)  //creamos la imagen, a partir del Base64 y devolvemos su http
             }
 
             val new = repository.postGoal(goal!!, user!!)  //insertamos el employee

@@ -7,6 +7,7 @@ fun main(args: Array<String>) {
 }
 
 fun Application.myModule() {
+    configureContext(this)
     configureSerialization()
     configureSecurity()
     configureDatabases()

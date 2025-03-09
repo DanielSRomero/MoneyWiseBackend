@@ -1,5 +1,6 @@
 package domain.usecase.user
 
+import domain.infraestructure.Utils
 import domain.repository.UserInterface
 
 class DeleteUserUseCase (val repository : UserInterface){
@@ -9,6 +10,7 @@ class DeleteUserUseCase (val repository : UserInterface){
         return if (userName == null) {
             false
         }else{
+            Utils.deleteDirectory(userName!!)
             return repository.deleteUser(userName!!)
         }
 

@@ -21,7 +21,7 @@ class UpdateGoalUseCase (val repository : GoalsInterface){
                     val go = repository.getGoalByName(name!!, user!!)
                     go?.let { go ->
                         go.image?.let{ oldImg->  //Si hay imagen antigua, me la cargo
-                            Utils.deleteImage(go.name, oldImg)  //la elimino.
+                            Utils.deleteImage(go.userUserName, oldImg)  //la elimino.
                         }
                     }
                     //ahora tengo que crear la nueva imagen.
