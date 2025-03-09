@@ -48,7 +48,7 @@ CREATE TABLE Goals (
                       name VARCHAR(100),
                       money INT,
                       year INT,
-                      image VARCHAR(255),
+                      image LONGTEXT,
                       FOREIGN KEY (userUserName) REFERENCES User(userName)
                               ON DELETE CASCADE
                               ON UPDATE CASCADE

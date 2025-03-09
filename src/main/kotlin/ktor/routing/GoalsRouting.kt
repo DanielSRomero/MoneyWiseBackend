@@ -84,6 +84,7 @@ fun Route.goalsRouting(){
                         name?.let{
                             val updateGoal = call.receive<UpdateGoal>()
                             val goalsOfUser = ProviderUseCase.getGoalsFromUser(user.userName)
+
                             if (goalsOfUser?.find { it.name == updateGoal.name } == null) {
                                 val res = ProviderUseCase.updateGoal(updateGoal, name, user.userName)
                                 if (! res){
