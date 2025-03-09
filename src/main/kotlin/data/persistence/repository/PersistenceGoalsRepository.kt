@@ -44,7 +44,7 @@ class PersistenceGoalsRepository : GoalsInterface {
     }
 
 
-    override suspend fun postGoal(goal: Goal, user: User): Boolean {
+    override suspend fun postGoal(goal: Goal, user: User): Goal? {
         val g = getGoalByName(goal.name, user)
         return if (g == null) {
             suspendTransaction {
@@ -55,10 +55,10 @@ class PersistenceGoalsRepository : GoalsInterface {
                     this.year = goal.year
                     this.image = goal.image
                 }
-            }
-            true
+            }.toGoal()
+
         } else
-            false
+            null
     }
 
     override suspend fun updateGoal(goal: UpdateGoal, name: String, user: User): Boolean {

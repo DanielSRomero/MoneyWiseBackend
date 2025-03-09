@@ -1,5 +1,6 @@
 package domain.usecase.goals
 
+import domain.infraestructure.Utils
 import domain.models.goals.Goal
 import domain.models.goals.UpdateGoal
 import domain.models.user.User
@@ -14,7 +15,25 @@ class UpdateGoalUseCase (val repository : GoalsInterface){
         return if (user == null || goal == null || name == null) {
             false
         }else {
-            repository.updateGoal(goal!!, name!!, user!!)
+            try {
+                goal?.image?.let{  newImg->//siempre que haya una nueva imagen a insertar.
+                    //estoy dentro de la nueva imagen a crear.
+                    val go = repository.getGoalByName(name!!, user!!)
+                    go?.let { go ->
+                        go.image?.let{ oldImg->  //Si hay imagen antigua, me la cargo
+                            Utils.deleteImage(go.name, oldImg)  //la elimino.
+                        }
+                    }
+                    //ahora tengo que crear la nueva imagen.
+                    val newImagenUrl = Utils.createBase64ToImg(newImg, user!!.userName)
+                    goal!!.image = newImagenUrl
+                }//fin de si hay nueva imagen a insertar.
+                val newGoal = repository.updateGoal(goal!!, name!!, user!!)
+                return newGoal
+            }catch (e: Exception){
+                e.printStackTrace()
+                false
+            }
         }
     }
 }

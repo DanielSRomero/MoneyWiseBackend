@@ -11,7 +11,7 @@ interface GoalsInterface {
 
     suspend fun getGoalsByUserUserName (userUserName: String) : List<Goal>
 
-    suspend fun postGoal(goal: Goal, user: User) : Boolean
+    suspend fun postGoal(goal: Goal, user: User) : Goal?
 
     suspend fun updateGoal(goal: UpdateGoal, name: String, user: User) : Boolean
 

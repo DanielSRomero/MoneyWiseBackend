@@ -1,5 +1,6 @@
 package ktor.routing
 
+import ktor.ApplicationContext
 import domain.models.goals.Goal
 import domain.models.goals.UpdateGoal
 import domain.models.user.User
@@ -13,6 +14,7 @@ import io.ktor.server.routing.Route
 import io.ktor.server.routing.route
 import io.ktor.server.routing.*
 import ktor.validateToken
+import java.io.File
 
 
 fun Route.goalsRouting(){
